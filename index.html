@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touch Here </title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        #loveMessage {
+            display: none;
+            font-size: 2rem;
+            color: #ff69b4;
+        }
+
+        .falling-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            clip-path: polygon(50% 0%, 0% 30%, 0% 70%, 50% 100%, 100% 70%, 100% 30%);
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn btn-primary btn-lg" id="loveButton">💜 Touch Here 💜</button>
+        <div id="loveMessage">I LOVE YOU ROJA 💜</div>
+    </div>
+
+    <div class="falling-hearts" id="fallingHearts"></div>
+
+    <script>
+        const loveButton = document.getElementById('loveButton');
+        const loveMessage = document.getElementById('loveMessage');
+        const fallingHearts = document.getElementById('fallingHearts');
+
+        loveButton.addEventListener('click', () => {
+            loveButton.style.display = 'none';
+            loveMessage.style.display = 'block';
+            setTimeout(() => {
+                loveMessage.style.display = 'none';
+                loveButton.style.display = 'block';
+            }, 3000);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            const size = Math.random() * 20 + 10;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+
+            fallingHearts.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 200);
+    </script>
+</body>
+</html>
